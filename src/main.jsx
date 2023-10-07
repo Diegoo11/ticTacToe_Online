@@ -6,7 +6,7 @@ import App from './App';
 import './input.css';
 
 const config = {
-  uri: 'http://localhost:4000/',
+  uri: import.meta.env.VITE_GRAPHQL_URL,
   cache: new InMemoryCache(),
 };
 const client = new ApolloClient(config);
