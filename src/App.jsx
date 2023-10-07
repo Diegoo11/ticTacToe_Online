@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { Button } from '@nextui-org/react';
+import {
+  Button,
+} from '@nextui-org/react';
 import { getTable } from './operations/query';
 import Table from './Table';
 import Icon from './Icon';
 import ResetButton from './ResetButton';
+import Login from './Login';
 
 function App() {
   const {
@@ -30,6 +33,7 @@ function App() {
       </main>
       <footer className="w-full border-t-[#1b2533] border-t-2 text-white font-extrabold text-lg lg:text-2xl text-center p-5">
         Copyright © 2022 Diegoo11
+        <Login />
       </footer>
     </div>
   );
