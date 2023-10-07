@@ -38,7 +38,7 @@ function Table({ icon, tableObj }) {
       {table.map((row, i) => (
         <div className="flex gap-3 justify-between">
           {row.map((btn, j) => (
-            <button type="button" onClick={() => playedClick(i, j)} className="bg-[#111926] h-20 w-20 text-3xl sm:h-32 sm:w-32 sm:text-5xl font-bold text-white">
+            <button type="button" disabled={btn !== 0} onClick={() => playedClick(i, j)} className="bg-[#111926] h-20 w-20 text-3xl sm:h-32 sm:w-32 sm:text-5xl font-bold text-white">
               {icons[btn]}
             </button>
           ))}
