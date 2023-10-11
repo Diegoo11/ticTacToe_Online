@@ -6,8 +6,7 @@ export default function ResetButton() {
   const [resetTablero, { loading }] = useMutation(resetTable);
   return (
     <Button
-      className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg
-      absolute bottom-4 right-4 text-xl"
+      className="shadow-lg absolute bottom-4 right-4"
       isLoading={loading}
       onPress={() => resetTablero({ variables: { gameId: 1 } })}
     >

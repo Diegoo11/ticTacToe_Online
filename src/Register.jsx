@@ -7,30 +7,32 @@ import { useUser } from '../context/UserContext';
 
 export default function Login() {
   const {
-    isOpen: isOpenLogin,
-    onOpen: onOpenLogin,
-    onOpenChange: onOpenChangeLogin,
+    isOpen: isOpenRegister,
+    onOpen: onOpenRegister,
+    onOpenChange: onOpenChangeRegister,
   } = useDisclosure();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordAgain, setPasswordAgain] = useState('');
+
+  const { register, isLogged } = useUser();
   const navigate = useNavigate();
-  const { login, isLogged } = useUser();
 
   if (isLogged()) navigate('/play');
 
-  const handlelogin = async (onClose) => {
+  const handleRegister = async (onClose) => {
     onClose();
-    await login(username, password);
+    await register(username, password);
     location.replace('/play');
   };
 
   useEffect(() => {
-    onOpenLogin();
+    onOpenRegister();
   }, []);
   return (
     <Modal
-      isOpen={isOpenLogin}
-      onOpenChange={onOpenChangeLogin}
+      isOpen={isOpenRegister}
+      onOpenChange={onOpenChangeRegister}
       hideCloseButton
       isDismissable={false}
     >
@@ -38,16 +40,16 @@ export default function Login() {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1 text-xl">
-              Login
+              Register
             </ModalHeader>
             <ModalBody>
-              <p>Por favor ingresa un nombre de usuario y contraseña</p>
+              <p>Bienvenido ingrese sus datos</p>
               <Input
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
                 size="md"
                 type="email"
-                label="UserName"
+                label="Username"
                 maxLength={100}
               />
               <Input
@@ -59,6 +61,15 @@ export default function Login() {
                 maxLength={100}
                 isRequired
               />
+              <Input
+                onChange={(e) => setPasswordAgain(e.target.value)}
+                value={passwordAgain}
+                size="md"
+                type="password"
+                label="Password again"
+                maxLength={100}
+                isRequired
+              />
             </ModalBody>
             <ModalFooter>
               <Button
@@ -67,15 +78,15 @@ export default function Login() {
                 Exit
               </Button>
               <Button
-                onPress={() => { onClose(); navigate('/play/register'); }}
+                onPress={() => { onClose(); navigate('/play/login'); }}
               >
-                Or Register
+                Or Login
               </Button>
               <Button
-                disabled={username.length === 0 || password === 0}
-                onPress={() => handlelogin(onClose)}
+                disabled={username.length === 0 || password === 0 || password !== passwordAgain}
+                onPress={() => handleRegister(onClose)}
               >
-                Login
+                Register
               </Button>
             </ModalFooter>
           </>

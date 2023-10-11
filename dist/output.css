@@ -596,6 +596,10 @@ video {
   bottom: 0px;
 }
 
+.bottom-4 {
+  bottom: 1rem;
+}
+
 .bottom-\[10\%\] {
   bottom: 10%;
 }
@@ -648,6 +652,10 @@ video {
   right: 0.75rem;
 }
 
+.right-4 {
+  right: 1rem;
+}
+
 .right-\[10\%\] {
   right: 10%;
 }
@@ -678,22 +686,6 @@ video {
 
 .top-\[var\(--navbar-height\)\] {
   top: var(--navbar-height);
-}
-
-.bottom-2 {
-  bottom: 0.5rem;
-}
-
-.right-2 {
-  right: 0.5rem;
-}
-
-.bottom-4 {
-  bottom: 1rem;
-}
-
-.right-4 {
-  right: 1rem;
 }
 
 .-z-30 {
@@ -744,6 +736,10 @@ video {
   margin: 2.5rem;
 }
 
+.m-12 {
+  margin: 3rem;
+}
+
 .mx-0 {
   margin-left: 0px;
   margin-right: 0px;
@@ -783,6 +779,10 @@ video {
 
 .mb-2 {
   margin-bottom: 0.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
 }
 
 .mb-px {
@@ -873,16 +873,16 @@ video {
   height: 0.625rem;
 }
 
+.h-20 {
+  height: 5rem;
+}
+
 .h-3 {
   height: 0.75rem;
 }
 
 .h-3\.5 {
   height: 0.875rem;
-}
-
-.h-32 {
-  height: 8rem;
 }
 
 .h-4 {
@@ -901,6 +901,10 @@ video {
   height: 1.5rem;
 }
 
+.h-64 {
+  height: 16rem;
+}
+
 .h-7 {
   height: 1.75rem;
 }
@@ -911,10 +915,6 @@ video {
 
 .h-9 {
   height: 2.25rem;
-}
-
-.h-96 {
-  height: 24rem;
 }
 
 .h-\[100dvh\] {
@@ -974,26 +974,6 @@ video {
   height: var(--nextui-spacing-unit-8);
 }
 
-.h-20 {
-  height: 5rem;
-}
-
-.h-60 {
-  height: 15rem;
-}
-
-.h-24 {
-  height: 6rem;
-}
-
-.h-56 {
-  height: 14rem;
-}
-
-.h-64 {
-  height: 16rem;
-}
-
 .max-h-64 {
   max-height: 16rem;
 }
@@ -1012,6 +992,10 @@ video {
 
 .min-h-unit-8 {
   min-height: var(--nextui-spacing-unit-8);
+}
+
+.min-h-screen {
+  min-height: 100vh;
 }
 
 .w-1 {
@@ -1042,6 +1026,10 @@ video {
   width: 0.625rem;
 }
 
+.w-20 {
+  width: 5rem;
+}
+
 .w-3 {
   width: 0.75rem;
 }
@@ -1050,12 +1038,12 @@ video {
   width: 0.875rem;
 }
 
-.w-32 {
-  width: 8rem;
-}
-
 .w-4 {
   width: 1rem;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .w-5 {
@@ -1064,6 +1052,10 @@ video {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-60 {
+  width: 15rem;
 }
 
 .w-7 {
@@ -1076,10 +1068,6 @@ video {
 
 .w-9 {
   width: 2.25rem;
-}
-
-.w-96 {
-  width: 24rem;
 }
 
 .w-\[80\%\] {
@@ -1126,20 +1114,12 @@ video {
   width: var(--nextui-spacing-unit-8);
 }
 
-.w-20 {
-  width: 5rem;
-}
-
-.w-60 {
-  width: 15rem;
+.w-32 {
+  width: 8rem;
 }
 
 .w-24 {
   width: 6rem;
-}
-
-.w-56 {
-  width: 14rem;
 }
 
 .min-w-\[200px\] {
@@ -1919,6 +1899,11 @@ video {
   background-color: rgb(17 25 38 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#161e2b\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 30 43 / var(--tw-bg-opacity));
+}
+
 .bg-background {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--nextui-background) / var(--nextui-background-opacity, var(--tw-bg-opacity)));
@@ -2093,10 +2078,6 @@ video {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
-.bg-gradient-to-tr {
-  background-image: linear-gradient(to top right, var(--tw-gradient-stops));
-}
-
 .bg-stripe-gradient {
   background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, transparent 75%, transparent);
 }
@@ -2107,12 +2088,6 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-pink-500 {
-  --tw-gradient-from: #ec4899 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(236 72 153 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .via-blue-500 {
   --tw-gradient-to: rgb(59 130 246 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #3b82f6 var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -2120,10 +2095,6 @@ video {
 
 .to-purple-600 {
   --tw-gradient-to: #9333ea var(--tw-gradient-to-position);
-}
-
-.to-yellow-500 {
-  --tw-gradient-to: #eab308 var(--tw-gradient-to-position);
 }
 
 .bg-\[length\:1\.25rem_1\.25rem\] {
@@ -2356,19 +2327,14 @@ video {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
-}
-
-.text-6xl {
-  font-size: 3.75rem;
-  line-height: 1;
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-\[0\.55rem\] {
@@ -2386,6 +2352,11 @@ video {
 .text-large {
   font-size: var(--nextui-font-size-large);
   line-height: var(--nextui-line-height-large);
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-medium {
@@ -2408,19 +2379,9 @@ video {
   line-height: 1.75rem;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold {
@@ -2515,6 +2476,11 @@ video {
 .text-foreground-600 {
   --tw-text-opacity: 1;
   color: hsl(var(--nextui-foreground-600) / var(--nextui-foreground-600-opacity, var(--tw-text-opacity)));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 .text-inherit {
@@ -6202,6 +6168,10 @@ video {
     width: 24rem;
   }
 
+  .sm\:w-40 {
+    width: 10rem;
+  }
+
   .sm\:items-start {
     align-items: flex-start;
   }
@@ -6212,11 +6182,6 @@ video {
 
   .sm\:items-center {
     align-items: center;
-  }
-
-  .sm\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
   }
 
   .sm\:text-5xl {
@@ -6242,21 +6207,52 @@ video {
 }
 
 @media (min-width: 768px) {
-  .md\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+  .md\:h-96 {
+    height: 24rem;
+  }
+
+  .md\:h-32 {
+    height: 8rem;
+  }
+
+  .md\:w-60 {
+    width: 15rem;
+  }
+
+  .md\:w-96 {
+    width: 24rem;
+  }
+
+  .md\:w-32 {
+    width: 8rem;
+  }
+
+  .md\:w-40 {
+    width: 10rem;
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
+  .md\:p-5 {
+    padding: 1.25rem;
   }
 }
 
 @media (min-width: 1024px) {
+  .lg\:w-60 {
+    width: 15rem;
+  }
+
   .lg\:text-6xl {
     font-size: 3.75rem;
     line-height: 1;
   }
 
-  .lg\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
+  .lg\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 
