@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
 import { Button, CircularProgress } from '@nextui-org/react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { played } from './operations/mutation';
 import { getTable } from './operations/query';
 import EndGame from './EndGame';
+import ResetButton from './ResetButton';
 
 const icons = {
   0: ' ',
@@ -15,6 +16,7 @@ const icons = {
 function Table() {
   const { gameId } = useParams();
   const [updatePlayed] = useMutation(played);
+  const navigate = useNavigate();
   const {
     loading: loadingQu, data: dataQu, refetch, error,
   } = useQuery(getTable, { variables: { gameId } });
@@ -51,12 +53,8 @@ function Table() {
     });
   };
 
-  if (tableObj.winner === 1) {
-    console.log('Ganador 1');
-  }
-
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center gap-2">
       <div className="flex flex-col gap-3 justify-between bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 h-64 w-60 md:h-96 md:w-96 m-10">
         {table.map((row, i) => (
           <div className="flex gap-3 justify-between" key={uuidv4()}>
@@ -74,8 +72,12 @@ function Table() {
           </div>
         ))}
       </div>
-      <Button onPress={() => { refetch(); }}>Reload</Button>
-      {tableObj.winner && <EndGame />}
+      <div className="flex gap-2">
+        <Button onPress={() => { refetch(); }}>Reload</Button>
+        <ResetButton />
+        <Button onPress={() => { navigate('/play'); }}>Exit</Button>
+      </div>
+      {tableObj.winner !== 0 && <EndGame winner={tableObj.winner} />}
     </div>
   );
 }

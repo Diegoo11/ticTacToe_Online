@@ -33,6 +33,8 @@ query($gameId: String!) {
     p_6
     p_7
     p_8
+    winner
+    status
   }
 }
 `;
