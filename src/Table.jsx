@@ -4,6 +4,7 @@ import { Button, CircularProgress } from '@nextui-org/react';
 import { useParams } from 'react-router-dom';
 import { played } from './operations/mutation';
 import { getTable } from './operations/query';
+import EndGame from './EndGame';
 
 const icons = {
   0: ' ',
@@ -40,6 +41,7 @@ function Table() {
       tableObj.p_8,
     ],
   ];
+
   const playedClick = (x, y) => {
     updatePlayed({
       variables: {
@@ -49,15 +51,19 @@ function Table() {
     });
   };
 
+  if (tableObj.winner === 1) {
+    console.log('Ganador 1');
+  }
+
   return (
-    <>
+    <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col gap-3 justify-between bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 h-64 w-60 md:h-96 md:w-96 m-10">
         {table.map((row, i) => (
           <div className="flex gap-3 justify-between" key={uuidv4()}>
             {row.map((btn, j) => (
               <button
                 type="button"
-                disabled={btn !== 0}
+                disabled={btn !== 0 || tableObj.winner === 1}
                 onClick={() => playedClick(i, j)}
                 key={uuidv4()}
                 className="bg-[#111926] h-20 w-20 text-3xl md:h-32 md:w-32 sm:text-5xl font-bold text-white"
@@ -69,7 +75,8 @@ function Table() {
         ))}
       </div>
       <Button onPress={() => { refetch(); }}>Reload</Button>
-    </>
+      {tableObj.winner && <EndGame />}
+    </div>
   );
 }
 

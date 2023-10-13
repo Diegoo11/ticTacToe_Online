@@ -12,6 +12,8 @@ mutation($play: Int!, $gameId: String!) {
     p_5
     p_7
     p_8
+    status
+    winner
   }
 }
 `;
