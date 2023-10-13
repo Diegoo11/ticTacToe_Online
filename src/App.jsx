@@ -18,8 +18,8 @@ function App({ children }) {
         <ResetButton />
   */
   return (
-    <div className="flex flex-col justify-between w-screen h-full bg-[#111926] min-h-screen">
-      <nav className="w-full border-b-[#1b2533] border-b-2 text-white font-extrabold text-4xl lg:text-6xl text-center p-5">
+    <div className="w-full flex flex-col justify-between h-full bg-[#111926] min-h-screen">
+      <nav className="border-b-[#1b2533] border-b-2 text-white font-extrabold text-4xl lg:text-6xl text-center p-5">
         Tic-Tac-Toe-Online
       </nav>
       <main className="w-full flex flex-col justify-center items-center">

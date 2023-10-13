@@ -14,7 +14,7 @@ export default function InvitationLink({ gameId }) {
   };
 
   return (
-    <div className="flex flex-col gap-4 font-semibold text-center">
+    <div className="flex flex-col gap-4 font-semibold text-center text-gray-300 mb-10">
       <div className="flex flex-col gap-2 justify-center items-center">
         <span>Comparte el link para jugar!</span>
         <Button onPress={copyButton}>

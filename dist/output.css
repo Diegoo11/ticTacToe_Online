@@ -596,10 +596,6 @@ video {
   bottom: 0px;
 }
 
-.bottom-4 {
-  bottom: 1rem;
-}
-
 .bottom-96 {
   bottom: 24rem;
 }
@@ -658,10 +654,6 @@ video {
 
 .right-3 {
   right: 0.75rem;
-}
-
-.right-4 {
-  right: 1rem;
 }
 
 .right-\[10\%\] {
@@ -756,6 +748,14 @@ video {
   margin: auto;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
+.m-2 {
+  margin: 0.5rem;
+}
+
 .mx-0 {
   margin-left: 0px;
   margin-right: 0px;
@@ -779,6 +779,11 @@ video {
 .my-16 {
   margin-top: 4rem;
   margin-bottom: 4rem;
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .-ml-2 {
@@ -819,6 +824,10 @@ video {
 
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
 }
 
 .box-border {

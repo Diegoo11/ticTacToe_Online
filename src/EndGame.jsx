@@ -1,4 +1,4 @@
-export default function EndGame() {
+export default function EndGame({ winner }) {
   return (
     <div className="
     animate-jump animate-twice animate-duration-[400ms] animate-delay-0 animate-ease-in-out animate-normal
@@ -8,7 +8,10 @@ export default function EndGame() {
     >
       <div className="p-4 flex justify-center items-center border-gray-300 border-solid border-4 rounded-lg">
         <span className="">
-          Gano Player 1!
+          Gano Player
+          {' '}
+          {winner}
+          !
         </span>
       </div>
     </div>

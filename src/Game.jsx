@@ -21,19 +21,21 @@ export default function Game() {
   if (loading || loadingQuery) return <CircularProgress aria-label="Loading..." />;
   if (!user) navigate('/play');
   return (
-    <div className="flex flex-col md:flex-row">
-      <UserProfile
-        src={user.imgSrc}
-        username={user.username}
-      />
-      <span className="text-white">
-        <Table />
-        <InvitationLink gameId={gameId} />
-      </span>
-      <UserProfile
-        src={data?.getEnemy?.imgSrc || interrogatorio}
-        username={data?.getEnemy?.username || 'Not authenticated'}
-      />
+    <div className="flex flex-col">
+      <div className="flex flex-col md:flex-row m-2">
+        <UserProfile
+          src={user.imgSrc}
+          username={user.username}
+        />
+        <span className="text-white">
+          <Table />
+        </span>
+        <UserProfile
+          src={data?.getEnemy?.imgSrc || interrogatorio}
+          username={data?.getEnemy?.username || 'Not authenticated'}
+        />
+      </div>
+      <InvitationLink gameId={gameId} />
     </div>
   );
 }
