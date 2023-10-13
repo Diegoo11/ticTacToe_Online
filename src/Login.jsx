@@ -21,7 +21,7 @@ export default function Login() {
   const handlelogin = async (onClose) => {
     onClose();
     await login(username, password);
-    location.replace('/play');
+    navigate('/play');
   };
 
   useEffect(() => {

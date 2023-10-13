@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { useApolloClient, useQuery } from '@apollo/client';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   useContext, createContext,
 } from 'react';
@@ -16,7 +18,9 @@ export const useUser = () => {
 
 export function UserProvider({ children }) {
   const client = useApolloClient();
-  const { loading, data } = useQuery(getUser);
+  const { loading, data, error } = useQuery(getUser);
+
+  if (error) toast('Error de login');
 
   const isLogged = () => !!data?.getUser;
 
@@ -31,9 +35,10 @@ export function UserProvider({ children }) {
       });
       if (tk?.data) {
         localStorage.setItem('user-login-token', tk.data.login.value);
+        location.replace('/play');
       }
     } catch (err) {
-      console.error(err.message);
+      toast.error('Usuario o contraseña erronea');
     }
   };
   const register = async (username, password) => {
@@ -47,9 +52,10 @@ export function UserProvider({ children }) {
       });
       if (tk?.data) {
         localStorage.setItem('user-login-token', tk.data.register.value);
+        location.replace('/play');
       }
     } catch (err) {
-      console.error(err.message);
+      toast.error('Error al prosesar la solicitud');
     }
   };
   const logout = () => {
@@ -70,6 +76,9 @@ export function UserProvider({ children }) {
       }}
     >
       {children}
+      <ToastContainer
+        theme="dark"
+      />
     </userContext.Provider>
   );
 }

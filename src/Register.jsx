@@ -23,7 +23,7 @@ export default function Login() {
   const handleRegister = async (onClose) => {
     onClose();
     await register(username, password);
-    location.replace('/play');
+    navigate('/play');
   };
 
   useEffect(() => {
