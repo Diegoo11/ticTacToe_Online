@@ -5,7 +5,7 @@ import UserProfile from './UserProfile';
 import { useUser } from '../context/UserContext';
 import interrogatorio from './assets/interrogatorio.svg';
 import Table from './Table';
-import { getEnemy } from './operations/query';
+import { getEnemy, getTurn } from './operations/query';
 import InvitationLink from './InvitationLink';
 
 export default function Game() {
@@ -17,8 +17,15 @@ export default function Game() {
       gameId,
     },
   });
+  const {
+    loading: loadingTurn,
+    data: dataTurn,
+    refetch: refetchTurn,
+  } = useQuery(getTurn, {
+    variables: { gameId },
+  });
 
-  if (loading || loadingQuery) return <CircularProgress aria-label="Loading..." />;
+  if (loading || loadingQuery || loadingTurn) return <CircularProgress aria-label="Loading..." />;
   if (!user) navigate('/play');
   return (
     <div className="flex flex-col">
@@ -26,13 +33,15 @@ export default function Game() {
         <UserProfile
           src={user.imgSrc}
           username={user.username}
+          turn={user.id === dataTurn.getTurn.id}
         />
         <span className="text-white">
-          <Table />
+          <Table refetchTurn={refetchTurn} />
         </span>
         <UserProfile
           src={data?.getEnemy?.imgSrc || interrogatorio}
           username={data?.getEnemy?.username || 'Not authenticated'}
+          turn={data?.getEnemy?.id === dataTurn.getTurn.id}
         />
       </div>
       <InvitationLink gameId={gameId} />

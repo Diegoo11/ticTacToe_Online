@@ -14,7 +14,7 @@ const icons = {
   2: 'O',
 };
 
-function Table() {
+function Table({ refetchTurn }) {
   const { gameId } = useParams();
   const [updatePlayed] = useMutation(played);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Table() {
 
   useSubscription(playerPlayed, {
     variables: { gameId },
-    onSubscriptionData: () => refetch(),
+    onSubscriptionData: () => { refetch(); refetchTurn(); },
   });
 
   if (loadingQu) return <CircularProgress aria-label="Loading..." />;
