@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
 import { Button, CircularProgress } from '@nextui-org/react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { played } from './operations/mutation';
 import { getTable } from './operations/query';
 import EndGame from './EndGame';
 import ResetButton from './ResetButton';
+import { playerPlayed } from './operations/subscription';
 
 const icons = {
   0: ' ',
@@ -20,6 +21,11 @@ function Table() {
   const {
     loading: loadingQu, data: dataQu, refetch, error,
   } = useQuery(getTable, { variables: { gameId } });
+
+  useSubscription(playerPlayed, {
+    variables: { gameId },
+    onSubscriptionData: () => refetch(),
+  });
 
   if (loadingQu) return <CircularProgress aria-label="Loading..." />;
   if (error) throw new Error(error.message);
@@ -73,7 +79,6 @@ function Table() {
         ))}
       </div>
       <div className="flex gap-2">
-        <Button onPress={() => { refetch(); }}>Reload</Button>
         <ResetButton />
         <Button onPress={() => { navigate('/play'); }}>Exit</Button>
       </div>

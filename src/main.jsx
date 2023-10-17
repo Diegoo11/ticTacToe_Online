@@ -1,11 +1,14 @@
 import {
-  ApolloClient, InMemoryCache, ApolloProvider, HttpLink,
+  ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split,
 } from '@apollo/client';
 import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 import App from './App';
 import './input.css';
 import { UserProvider } from '../context/UserContext';
@@ -22,12 +25,30 @@ const getAuth = () => {
   return token ? `bearer ${token}` : null;
 };
 
+const httpLink = new HttpLink({
+  headers: { authorization: getAuth() },
+  uri: import.meta.env.VITE_GRAPHQL_URL,
+});
+
+const wsLink = new GraphQLWsLink(createClient({
+  url: import.meta.env.VITE_GRAPHQL_SUBS_URL,
+}));
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition'
+      && definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink,
+);
+
 const config = {
   cache: new InMemoryCache(),
-  link: new HttpLink({
-    headers: { authorization: getAuth() },
-    uri: import.meta.env.VITE_GRAPHQL_URL,
-  }),
+  link: splitLink,
 };
 const client = new ApolloClient(config);
 

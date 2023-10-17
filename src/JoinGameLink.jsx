@@ -12,7 +12,6 @@ export default function JoinGameLink() {
 
   useEffect(() => {
     if (!loading) {
-      console.log(user);
       if (!user) navigate('/play/login');
       const join = async () => {
         const tk = await client.mutate({
