@@ -20,7 +20,7 @@ mutation($play: Int!, $gameId: String!) {
 
 export const resetTable = gql`
 mutation($gameId: String!) {
-  resetTable(game_id: $gameId) {
+  resetTable(gameId: $gameId) {
     p_0
   }
 }
