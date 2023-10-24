@@ -8,7 +8,7 @@ export default function ErrorPageGame() {
   return (
     <div className="mb-8 w-40 md:w-60 flex flex-col justify-center items-center gap-6">
       <img
-        className="bg-[#161e2b] rounded-md p-4"
+        className="bg-[#313131] rounded-md p-4"
         src={error}
         alt="error"
       />

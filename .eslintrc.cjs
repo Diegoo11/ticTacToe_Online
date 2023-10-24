@@ -22,5 +22,7 @@ module.exports = {
     'react/prop-types': 0,
     'react-hooks/exhaustive-deps': 0,
     'no-restricted-globals': 0,
+    'no-param-reassign': 0,
+    'no-underscore-dangle': 0,
   },
 }

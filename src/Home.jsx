@@ -21,7 +21,7 @@ export default function Home() {
           maxLength={100}
           classNames={{
             input: [
-              'bg-[#161e2b]',
+              'bg-[#313131]',
             ],
           }}
         />
