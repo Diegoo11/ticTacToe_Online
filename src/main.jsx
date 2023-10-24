@@ -1,14 +1,9 @@
 import {
-  ApolloClient, InMemoryCache, ApolloProvider, HttpLink, split,
-} from '@apollo/client';
-import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import './input.css';
 import { UserProvider } from '../context/UserContext';
@@ -20,37 +15,14 @@ import ErrorPageGame from './ErrorPageGame';
 import Redirect from './Redirec';
 import JoinGameLink from './JoinGameLink';
 
+/*
 const getAuth = () => {
   const token = localStorage.getItem('user-login-token');
   return token ? `bearer ${token}` : null;
 };
+*/
 
-const httpLink = new HttpLink({
-  headers: { authorization: getAuth() },
-  uri: import.meta.env.VITE_GRAPHQL_URL,
-});
-
-const wsLink = new GraphQLWsLink(createClient({
-  url: import.meta.env.VITE_GRAPHQL_SUBS_URL,
-}));
-
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition'
-      && definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink,
-);
-
-const config = {
-  cache: new InMemoryCache(),
-  link: splitLink,
-};
-const client = new ApolloClient(config);
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -89,9 +61,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <ApolloProvider client={client}>
+  <QueryClientProvider client={queryClient}>
     <UserProvider>
       <RouterProvider router={router} />
     </UserProvider>
-  </ApolloProvider>,
+  </QueryClientProvider>,
 );

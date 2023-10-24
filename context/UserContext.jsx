@@ -1,14 +1,20 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/jsx-no-constructed-context-values */
-import { useApolloClient, useQuery } from '@apollo/client';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
   useContext, createContext,
 } from 'react';
-import { getUser } from '../src/operations/query';
-import { LOGIN, REGISTER } from '../src/operations/mutation';
+import io from 'socket.io-client';
+import instance from '../src/operations/axios';
 
 const userContext = createContext();
+
+const getAuth = () => {
+  const token = localStorage.getItem('user-login-token');
+  return token ? `bearer ${token}` : null;
+};
 
 export const useUser = () => {
   const contex = useContext(userContext);
@@ -17,24 +23,29 @@ export const useUser = () => {
 };
 
 export function UserProvider({ children }) {
-  const client = useApolloClient();
-  const { loading, data, error } = useQuery(getUser);
+  const socket = io(import.meta.env.VITE_WEB_SOCKET_URL);
+  const client = useQueryClient();
+  const { isPending: loading, data, error } = useQuery({
+    queryKey: ['getUser'],
+    queryFn: () => instance.get('/user', {
+      headers: {
+        Authorization: getAuth(),
+      },
+    }).then((res) => res.data),
+  });
 
-  if (error) toast('Error de login');
+  if (error) toast(error?.response?.data.error || 'Internal error');
 
-  const isLogged = () => !!data?.getUser;
+  const isLogged = () => !!data?.currentUser;
 
   const login = async (username, password) => {
     try {
-      const tk = await client.mutate({
-        mutation: LOGIN,
-        variables: {
-          username,
-          password,
-        },
+      const tk = await instance.put('/login', {
+        username,
+        password,
       });
       if (tk?.data) {
-        localStorage.setItem('user-login-token', tk.data.login.value);
+        localStorage.setItem('user-login-token', tk.data.value);
         location.replace('/play');
       }
     } catch (err) {
@@ -43,15 +54,15 @@ export function UserProvider({ children }) {
   };
   const register = async (username, password) => {
     try {
-      const tk = await client.mutate({
-        mutation: REGISTER,
-        variables: {
-          username,
-          password,
-        },
+      const tk = await instance.post('/register', {
+        // mutation: REGISTER,
+        // variables: {
+        username,
+        password,
+        // },
       });
       if (tk?.data) {
-        localStorage.setItem('user-login-token', tk.data.register.value);
+        localStorage.setItem('user-login-token', tk.data.value);
         location.replace('/play');
       }
     } catch (err) {
@@ -60,19 +71,20 @@ export function UserProvider({ children }) {
   };
   const logout = () => {
     localStorage.removeItem('user-login-token');
-    client.clearStore();
+    client.clear();
     location.reload();
   };
 
   return (
     <userContext.Provider
       value={{
-        user: data?.getUser,
+        user: data?.currentUser,
         loading,
         isLogged,
         login,
         logout,
         register,
+        socket,
       }}
     >
       {children}

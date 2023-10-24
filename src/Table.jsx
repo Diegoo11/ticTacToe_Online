@@ -1,36 +1,73 @@
-import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
 import { Button, CircularProgress } from '@nextui-org/react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { played } from './operations/mutation';
-import { getTable } from './operations/query';
+import {
+  useMutation, useQuery, useQueryClient, QueryCache,
+} from '@tanstack/react-query';
+import { useEffect } from 'react';
 import EndGame from './EndGame';
 import ResetButton from './ResetButton';
-import { playerPlayed } from './operations/subscription';
+import instance from './operations/axios';
+import { useUser } from '../context/UserContext';
+import getAuth from './operations/getAuth';
 
 const icons = {
   0: ' ',
   1: 'X',
   2: 'O',
 };
-
+// web sockets
 function Table({ refetchTurn }) {
+  const client = useQueryClient();
+  const queryCache = new QueryCache({
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onSettled: (data, error) => {
+      console.log(data, error);
+    },
+  });
   const { gameId } = useParams();
-  const [updatePlayed] = useMutation(played);
-  const navigate = useNavigate();
-  const {
-    loading: loadingQu, data: dataQu, refetch, error,
-  } = useQuery(getTable, { variables: { gameId } });
+  const { socket } = useUser();
+  const { mutate } = useMutation({
+    mutationKey: ['played'],
+    mutationFn: (played) => instance.put('/table', played, {
+      headers: {
+        Authorization: getAuth(),
+      },
+    }),
+  });
 
-  useSubscription(playerPlayed, {
-    variables: { gameId },
-    onSubscriptionData: () => { refetch(); refetchTurn(); },
+  const {
+    isPending: loadingQu, data: dataQu, refetch, error,
+  } = useQuery({
+    queryKey: ['getTable'],
+    queryFn: () => instance.get('/table', {
+      params: {
+        gameId,
+      },
+      headers: {
+        Authorization: getAuth(),
+      },
+    }).then((res) => res.data),
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    socket.on('played', () => {
+      refetch();
+      refetchTurn();
+    });
   });
 
   if (loadingQu) return <CircularProgress aria-label="Loading..." />;
   if (error) throw new Error(error.message);
 
-  const tableObj = dataQu.getTable;
+  const tableObj = dataQu.table;
 
   const table = [
     [
@@ -51,12 +88,11 @@ function Table({ refetchTurn }) {
   ];
 
   const playedClick = (x, y) => {
-    updatePlayed({
-      variables: {
-        play: (3 * x + y),
-        gameId,
-      },
+    mutate({
+      play: (3 * x + y),
+      gameId,
     });
+    socket.emit('playerPlayed', { gameId });
   };
 
   return (
@@ -80,7 +116,15 @@ function Table({ refetchTurn }) {
       </div>
       <div className="flex gap-2">
         <ResetButton />
-        <Button onPress={() => { navigate('/play'); }}>Exit</Button>
+        <Button onPress={() => {
+          navigate('/play');
+          client.clear();
+          queryCache.clear();
+        }}
+        >
+          Exit
+
+        </Button>
       </div>
       {tableObj.winner !== 0 && <EndGame winner={tableObj.winner} />}
     </div>

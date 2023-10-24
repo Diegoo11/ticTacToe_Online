@@ -1,23 +1,17 @@
-import { useApolloClient } from '@apollo/client';
 import { Button, Input } from '@nextui-org/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { JOINGAME } from '../operations/mutation';
+import instance from '../operations/axios';
 
 export default function JoinGame() {
   const [pin, setPin] = useState('');
   const navigate = useNavigate();
-  const client = useApolloClient();
-
   const joinGame = async () => {
-    const tk = await client.mutate({
-      mutation: JOINGAME,
-      variables: {
-        gameId: pin,
-      },
+    const tk = await instance.put('/game', {
+      gameId: pin,
     });
     if (tk?.data) {
-      navigate(`/game/${tk.data.joinGame.value}`);
+      navigate(`/game/${tk.data.value}`);
     }
   };
   return (

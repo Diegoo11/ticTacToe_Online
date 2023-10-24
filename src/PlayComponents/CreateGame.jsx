@@ -1,18 +1,21 @@
-import { useApolloClient } from '@apollo/client';
 import { Button } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { CREATEGAME } from '../operations/mutation';
+import instance from '../operations/axios';
+import getAuth from '../operations/getAuth';
 
 export default function CreateGame() {
   const [loading, setLoading] = useState(false);
-  const client = useApolloClient();
   const navigate = useNavigate();
   const createGame = async () => {
     setLoading(true);
-    const id = await client.mutate({ mutation: CREATEGAME });
+    const id = await instance.post('/game', {}, {
+      headers: {
+        Authorization: getAuth(),
+      },
+    });
     if (id?.data) {
-      navigate(`/game/${id.data.createGame.value}`);
+      navigate(`/game/${id.data.value}`);
     }
   };
 
