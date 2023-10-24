@@ -112,7 +112,7 @@ function Table({
         ))}
       </div>
       <div className="flex gap-2">
-        <ResetButton />
+        <ResetButton setTable={setTable} setWinner={setWinner} />
         <Button onPress={() => {
           navigate('/play');
           client.clear();

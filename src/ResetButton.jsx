@@ -1,29 +1,18 @@
 import { Button } from '@nextui-org/react';
 import { useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import instance from './operations/axios';
 import { useUser } from '../context/UserContext';
-import getAuth from './operations/getAuth';
 
-export default function ResetButton() {
+export default function ResetButton({ setTable, setWinner }) {
   const { gameId } = useParams();
-  const { socket } = useUser();
-  const { mutate, loading } = useMutation({
-    mutationKey: ['resetTable'],
-    mutationFn: (ctx) => instance.put('/table/reset', ctx, {
-      headers: {
-        Authorization: getAuth(),
-      },
-    }),
-  });
+  const { socket, user } = useUser();
 
   const handdleReset = () => {
-    mutate({ gameId });
-    socket.emit('playerPlayed', { gameId });
+    socket.emit('reset', { gameId, userId: user._id });
+    setTable([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+    setWinner(0);
   };
   return (
     <Button
-      isLoading={loading}
       onPress={handdleReset}
     >
       Reset
